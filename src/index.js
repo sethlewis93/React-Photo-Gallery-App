@@ -1,13 +1,18 @@
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom'
 import ReactDOM from 'react-dom';
-import './index.css';
+import {UserContextProvider} from './UserContext'
+
+import './css/index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './utils/reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <UserContextProvider>
+    <Router>
+      <App />
+    </Router>
+  </UserContextProvider>,
   document.getElementById('root')
 );
 
