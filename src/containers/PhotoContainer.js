@@ -1,82 +1,105 @@
 import React, {useContext} from 'react';
-import {useParams} from 'react-router-dom'
+import {useParams, useLocation} from 'react-router-dom'
+import {apiKey} from '../config';
 
 // Components
 import {UserContext} from '../UserContext';
 import Photo from '../components/Photo';
-import NoResults from '../components/NoResults';
 
-const PhotoContainer = () => {    
+function PhotoContainer() {    
     
-    const {allPhotos, dogPhotos, coffeePhotos, computerPhotos} = useContext(UserContext)
+    const {
+        defaultPhotos, 
+        dogPhotos, 
+        coffeePhotos, 
+        computerPhotos, 
+        searchedPhotos, 
+        setsearchedPhotos
+    } = useContext(UserContext)
+
     const {userQuery} = useParams()
+    const location = useLocation()
 
-    let imageElements;
-    let dogImageElements;
-    let coffeeImageElements;
-    let computerImageElements;
+    let searchImageElements;
 
-    if (allPhotos.length > 0) {
-         imageElements = allPhotos.map( img => (
-             <Photo  
-                url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
-                secret={img.secret}
-                key={img.id}  
-             />
+    let imageElements = defaultPhotos.map( img => (
+            <Photo  
+            url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+            secret={img.secret}
+            key={img.id}  
+            />
+        )
+    )
+
+    let dogImageElements = dogPhotos.map( img => (
+        <Photo  
+            url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+            secret={img.secret}
+            key={img.id}  
+        />
+        )
+    )
+
+    let coffeeImageElements = coffeePhotos.map( img => (
+        <Photo  
+            url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+            secret={img.secret}
+            key={img.id}  
+        />
+        )
+    )
+
+    let computerImageElements = computerPhotos.map( img => (
+        <Photo  
+            url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+            secret={img.secret}
+            key={img.id}  
+        />
+        )
+    )
+
+   if (searchedPhotos.length === 0 && userQuery !== undefined) {
+        fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${userQuery}&per_page=24&format=json&nojsoncallback=1`)
+            .then(res => res.json())
+            .then(data => setsearchedPhotos(data.photos.photo))
+        
+        searchImageElements = searchedPhotos.map( img => (
+            <Photo  
+               url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+               secret={img.secret}
+               key={img.id}  
+            />
+            )
+        )
+    } else if (searchedPhotos.length > 0) {
+        searchImageElements = searchedPhotos.map( img => (
+            <Photo  
+               url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
+               secret={img.secret}
+               key={img.id}  
+            />
             )
         )
 
-    } else {
-        imageElements = <NoResults />
     }
-
-    if (dogPhotos.length > 0 && userQuery === 'dogs') {
-        dogImageElements = dogPhotos.map( img => (
-            <Photo  
-               url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
-               secret={img.secret}
-               key={img.id}  
-            />
-            )
-        )
-   } 
-
-    if (coffeePhotos.length > 0 && userQuery === 'coffee') {
-        coffeeImageElements = coffeePhotos.map( img => (
-            <Photo  
-               url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
-               secret={img.secret}
-               key={img.id}  
-            />
-            )
-        )
-   }
-    if (computerPhotos.length > 0 && userQuery === 'computers') {
-        computerImageElements = computerPhotos.map( img => (
-            <Photo  
-               url={`https://live.staticflickr.com/${img.server}/${img.id}_${img.secret}_w.jpg`}
-               secret={img.secret}
-               key={img.id}  
-            />
-            )
-        )
-   }
-
-   /**
-    * If the user query is not one of the above or an empty string
-    */
 
     return (
         <div className="photo-container">
             <h2>{userQuery}</h2>
             <ul>
-                {userQuery === 'computers'
+                {
+
+                userQuery === 'computers'
                     ? computerImageElements 
                     : userQuery === 'dogs' 
                         ? dogImageElements 
                         : userQuery === 'coffee' 
                             ? coffeeImageElements 
-                            : imageElements}
+                            : location.pathname === '/' 
+                                ? imageElements 
+                                : searchImageElements
+                
+                }
             </ul>
         </div>
     );

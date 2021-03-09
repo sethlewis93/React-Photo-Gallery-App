@@ -1,20 +1,29 @@
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
-import { UserContext } from '../UserContext';
+import {UserContext} from '../UserContext';
+import {apiKey} from '../config';
 
-function SearchForm(props) {
+function SearchForm() {
 
-  const [userSearch, setUserSearch] = useState("")
-  const history = useHistory()
+  let [userSearch, setUserSearch] = useState("")
+  const {setsearchedPhotos} = useContext(UserContext)
+  const history = useHistory() 
 
   const onSearchChange = e => {
     setUserSearch(e.target.value)
   }
 
   const handleSubmit = e => { 
-    e.preventDefault()
-    props.onSearch(userSearch)
-    setUserSearch("")
+    e.preventDefault();
+
+    let path = `${userSearch.value}`;
+
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${path}&per_page=24&format=json&nojsoncallback=1`)
+      .then(history.push(path))
+      .then(res => res.json())
+      .then(data => setsearchedPhotos(data.photos.photo))
+
+    e.currentTarget.reset();
   }
 
   return (
@@ -23,7 +32,7 @@ function SearchForm(props) {
         onChange={onSearchChange}
         type="search" 
         name="search" 
-        value={userSearch}
+        ref={(input) => userSearch = input}
         placeholder="Search" 
         required 
         />
@@ -38,14 +47,3 @@ function SearchForm(props) {
 }
 
 export default SearchForm;
-
-
-/**
- *  <div>
-            <form>
-                <input ref={inputRef} type="text" name="todo" value={newTodoValue} onChange={handleChange}/>
-                <button onClick={addTodo}>Add todo item</button>
-            </form>
-            {allTodos}
-        </div>
- */

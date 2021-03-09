@@ -5,16 +5,16 @@ const UserContext = React.createContext();
 
 function UserContextProvider({children}) {
 
-    const [allPhotos, setAllPhotos] = useState([])
+    const [defaultPhotos, setdefaultPhotos] = useState([])
     const [dogPhotos, setDogPhotos] = useState([])
     const [coffeePhotos, setCoffeePhotos] = useState([])
     const [computerPhotos, setComputerPhotos] = useState([])
-    const [searchPhotos, setSearchPhotos] = useState([])
+    const [searchedPhotos, setsearchedPhotos] = useState([])
     
-    useEffect((query = 'New England') => {
+    useEffect((query = 'New Hampshire') => {
         fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
             .then(res => res.json())
-            .then(data => setAllPhotos(data.photos.photo))
+            .then(data => setdefaultPhotos(data.photos.photo))
     }, [])
 
     useEffect((query = 'Bernese Mountain Dogs') => {
@@ -35,15 +35,15 @@ function UserContextProvider({children}) {
             .then(data => setComputerPhotos(data.photos.photo))
     }, [])
 
-
-    useEffect((query) => {
-        fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-            .then(res => res.json())
-            .then(data => setSearchPhotos(data.photos.photo))
-    }, [])
-
     return (
-        <UserContext.Provider value={{allPhotos, dogPhotos, coffeePhotos, computerPhotos, searchPhotos}}>
+        <UserContext.Provider value={{
+            defaultPhotos, 
+            dogPhotos, 
+            coffeePhotos, 
+            computerPhotos, 
+            searchedPhotos, 
+            setsearchedPhotos
+        }}>
             {children}
         </UserContext.Provider>
     )
