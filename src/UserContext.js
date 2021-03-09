@@ -9,6 +9,7 @@ function UserContextProvider({children}) {
     const [dogPhotos, setDogPhotos] = useState([])
     const [coffeePhotos, setCoffeePhotos] = useState([])
     const [computerPhotos, setComputerPhotos] = useState([])
+    const [searchPhotos, setSearchPhotos] = useState([])
     
     useEffect((query = 'New England') => {
         fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -35,8 +36,14 @@ function UserContextProvider({children}) {
     }, [])
 
 
+    useEffect((query) => {
+        fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+            .then(res => res.json())
+            .then(data => setSearchPhotos(data.photos.photo))
+    }, [])
+
     return (
-        <UserContext.Provider value={{allPhotos, dogPhotos, coffeePhotos, computerPhotos}}>
+        <UserContext.Provider value={{allPhotos, dogPhotos, coffeePhotos, computerPhotos, searchPhotos}}>
             {children}
         </UserContext.Provider>
     )

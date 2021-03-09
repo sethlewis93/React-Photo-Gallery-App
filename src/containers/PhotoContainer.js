@@ -39,7 +39,7 @@ const PhotoContainer = () => {
             />
             )
         )
-   }
+   } 
 
     if (coffeePhotos.length > 0 && userQuery === 'coffee') {
         coffeeImageElements = coffeePhotos.map( img => (
@@ -62,10 +62,13 @@ const PhotoContainer = () => {
         )
    }
 
+   /**
+    * If the user query is not one of the above or an empty string
+    */
 
     return (
         <div className="photo-container">
-            <h2>Image Title</h2>
+            <h2>{userQuery}</h2>
             <ul>
                 {userQuery === 'computers'
                     ? computerImageElements 
