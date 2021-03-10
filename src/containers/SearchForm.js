@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from '../UserContext';
-import {apiKey} from '../config';
+import {apiKey} from '../config.js'
 
 function SearchForm() {
 

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {useParams, useLocation} from 'react-router-dom'
-import {apiKey} from '../config';
+import {apiKey} from '../config.js';
 
 // Components
 import {UserContext} from '../UserContext';
