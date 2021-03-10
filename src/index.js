@@ -1,19 +1,19 @@
-import React from 'react';
-import {BrowserRouter as Router} from 'react-router-dom'
-import ReactDOM from 'react-dom';
-import {UserContextProvider} from './UserContext'
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { PhotoAppContextProvider } from "./PhotoAppContext";
 
-import './css/index.css';
-import App from './App';
-import reportWebVitals from './utils/reportWebVitals';
+import "./css/index.css";
+import App from "./App";
+import reportWebVitals from "./utils/reportWebVitals";
 
 ReactDOM.render(
-  <UserContextProvider>
+  <PhotoAppContextProvider>
     <Router>
       <App />
     </Router>
-  </UserContextProvider>,
-  document.getElementById('root')
+  </PhotoAppContextProvider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
