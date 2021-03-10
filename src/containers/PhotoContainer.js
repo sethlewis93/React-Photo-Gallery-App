@@ -2,6 +2,7 @@ import React from "react";
 import usePhotoContainerState from "../hooks/usePhotoContainerState";
 
 function PhotoContainer() {
+  // All required variables accessed from custom hook. This keeps PhotContainer clean and easy to maintain.
   const {
     userQuery,
     location,

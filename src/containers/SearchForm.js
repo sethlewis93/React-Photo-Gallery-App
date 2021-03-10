@@ -4,8 +4,14 @@ import { PhotoAppContext } from "../PhotoAppContext";
 import { apiKey } from "../config.js";
 
 function SearchForm() {
+  // userSearch state specific to this search component
   let [userSearch, setUserSearch] = useState("");
+
+  // setSearchedPhotos function required by both SearchForm and PhotoContainer. Thus the need for PhotoAppContext Consumer
   const { setsearchedPhotos } = useContext(PhotoAppContext);
+
+  // SearchFrom requires use of the history stack to remain in sync with PhotoContainer.
+  // PhotoContainer must render the params pushed to the history stack.
   const history = useHistory();
 
   const onSearchChange = (e) => {
@@ -33,6 +39,7 @@ function SearchForm() {
         onChange={onSearchChange}
         type="search"
         name="search"
+        /** ref utilized here to ensure that SearchForm state remains single source of truth */
         ref={(input) => (userSearch = input)}
         placeholder="Search"
         required

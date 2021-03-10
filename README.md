@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# About
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Photo Gallery is my seventh completed project for the Team Treehouse Full Stack JavaScript Techdegree.
+Using React, I wrote the JavaScript to create an image gallery application in the style of modern single-page applications.
+This application leverages not only React but supportive tools and API's such as Create React App, Context, React Router, and Hooks.
+This application uses the built-in Fetch API to request data from the Flickr API.
 
-## Available Scripts
+# Architecture
 
-In the project directory, you can run:
+The application state is managed by the PhotoAppContext component and distributed to child components as needed.
+I leveraged the flexibility of Hooks for two reasons. First, I prefer to utilize functional components and I wanted to keep up with the React documentation and community which is/who are heading in the direction of applications that eliminate the need for class components alltogether. Second, hooks make the code easier to read, cleaner, and more maintainable.
 
-### `npm start`
+The PhotoAppContext provides context for the entire app to use via {children}. The app returns the objects and functions required by PhotoContainer and SearchForm to make use of state.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Components
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The App container renders the SearchForm, NavBar, and PhotoContainer components, if found, and it renders the NotFound component via React Router's Switch statement in the event that the PhotoContainer component cannot be rendered for any reason. I used React Router's useParams hook to pass url parameters to the PhotoContainer component.
 
-### `npm test`
+PhotoContainer consumes the data from the custom hook usePhotoContainerState (which itself receives the state from PhotoAppContext).
+PhotoContainer renders the Photo child component according to the user's search query (either via the search input field or directly from the url) or according to the NavBar button the user selects.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The SearchForm component both consumes state from PhotoAppContext and maintains it own state in order to fetch data from the Flickr API that matches the user's search. The component's handleSubmit function pushes the request to React's history stack via the useHistory hook and this allows the SearchForm and PhotoContainer components to remain in sync.

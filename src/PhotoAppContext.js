@@ -4,6 +4,7 @@ import { apiKey } from "./config";
 const PhotoAppContext = React.createContext();
 
 function PhotoAppContextProvider({ children }) {
+  // Repetitive state initializations best kept in Context and shared with other components as needed
   const [defaultPhotos, setdefaultPhotos] = useState([]);
   const [dogPhotos, setDogPhotos] = useState([]);
   const [coffeePhotos, setCoffeePhotos] = useState([]);
