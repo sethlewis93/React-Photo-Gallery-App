@@ -18,3 +18,8 @@ PhotoContainer renders the Photo child component according to the user's search 
 The SearchForm component both consumes state from PhotoAppContext and maintains it own state in order to fetch data from the Flickr API that matches the user's search. The component's handleSubmit function pushes the request to React's history stack via the useHistory hook and this allows the SearchForm and PhotoContainer components to remain in sync.
 
 # Instructions
+
+1. Download project files.
+2. Run `npm install` to retrieve project dependencies.
+3. Run `npm start` and the app will open on localhost:3000.
+4. Select one of the queries in the nav bar or enter your own. The app will render photos returned from the Flickr API.
