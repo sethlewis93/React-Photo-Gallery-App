@@ -20,7 +20,8 @@ function PhotoAppContextProvider({ children }) {
       .then((data) => setdefaultPhotos(data.photos.photo));
   }, []);
 
-  useEffect((query = "Bernese Mountain Dogs") => {
+  // These are the queries available in the nav bar.
+  useEffect((query = "dog") => {
     fetch(
       `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
     )
@@ -36,7 +37,7 @@ function PhotoAppContextProvider({ children }) {
       .then((data) => setCoffeePhotos(data.photos.photo));
   }, []);
 
-  useEffect((query = "computers") => {
+  useEffect((query = "linux") => {
     fetch(
       `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
     )

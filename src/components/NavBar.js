@@ -12,7 +12,7 @@ function NavBar() {
           <NavLink to="/coffee">Coffee</NavLink>
         </li>
         <li>
-          <NavLink to="/computers">Computers</NavLink>
+          <NavLink to="/linux">Linux</NavLink>
         </li>
       </ul>
     </nav>

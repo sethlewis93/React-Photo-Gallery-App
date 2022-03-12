@@ -21,7 +21,7 @@ function PhotoContainer() {
           ? dogImageElements
           : userQuery === "coffee"
           ? coffeeImageElements
-          : userQuery === "computers"
+          : userQuery === "linux"
           ? computerImageElements
           : location.pathname === "/"
           ? defaultImageElements
