@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound";
 function App() {
   return (
     <div className="container">
+      <h1>Fetch Some Photos! 📸</h1>
       <SearchForm />
       <NavBar />
 
